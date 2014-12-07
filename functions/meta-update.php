@@ -10,40 +10,24 @@ function wpptm_update_post_type_meta() {
 	
 		/* get the current post type */
 		$post_type = $_GET[ 'post_type' ];
-		
-		/**
-		 * build an array of wpptm options to output
-		 * $hooked wpptm_add_description_setting - 10
-		 */
-		$wpptm_settings = apply_filters(
-			'wpptm_settings',
-			array()
-		);
-		
-		/* check we have settings to update */
-		if( ! empty( $wpptm_settings ) ) {
 			
-			/* loop through each setting added */
-			foreach( $wpptm_settings as $setting ) {
-				
-				/* get the current saved values from options */
-				$wpptm_options = get_option( 'wpptm_meta' );
-				
-				/* get the setting id */
-				$setting_id = $post_type . '_' . $setting[ 'id' ];
-				
-				/* get the posted value for this setting */
-				$posted_setting_id = $_POST[ $setting_id ];
-				
-				/* add our posted setting to the options array */
-				$wpptm_options[ $setting_id ] = $posted_setting_id;
+		/* loop through each setting added */
+		foreach( $_POST as $key => $value ) {
+			
+			/* if the key is either the post type or the save button */
+			if( $key == 'wpptm_post_type' || $key == 'wpptm_update_metainfo' )
+				continue;
+			
+			/* get the current saved values from options */
+			$wpptm_options = get_option( 'wpptm_meta' );
+							
+			/* add our posted setting to the options array */
+			$wpptm_options[ $key ] = $value;
 
-				/* update this setting */
-				update_option( 'wpptm_meta', $wpptm_options );
-				
-			} // end loop through each setting
+			/* update this setting */
+			update_option( 'wpptm_meta', $wpptm_options );
 			
-		} // end if have settings to update
+		} // end loop through each setting
 
 		/* redirect the user to meta admin page with added query vars */
 		wp_redirect(
@@ -63,4 +47,4 @@ function wpptm_update_post_type_meta() {
 
 }
 
-add_action( 'init', 'wpptm_update_post_type_meta' );
+add_action( 'admin_init', 'wpptm_update_post_type_meta', 99 );

@@ -4,7 +4,7 @@ Donate link: http://markwilkinson.me/saythanks
 Tags: custom post type, meta, options
 Requires at least: 4.0
 Tested up to: 4.0.1
-Stable tag: 0.1
+Stable tag: 0.3
 License: GPLv2 or later
 License URI: http://www.gnu.org/licenses/gpl-2.0.html
 
@@ -87,6 +87,12 @@ In the above example if the custom post type was called `cpt_content` you would 
 None yet!
 
 == Changelog ==
+
+= 0.3 =
+* Changed the way in which meta values are saved. Less complex now!
+
+= 0.2 =
+* Pass the post type object to the wpptm_settings filter to allow adding fields to certain post types only.
 
 = 0.1 =
 * Initial commit to wp.org.

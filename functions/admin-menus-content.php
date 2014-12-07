@@ -35,7 +35,8 @@ function wpptm_metainfo_content() {
 				 */
 				$wpptm_settings = apply_filters(
 					'wpptm_settings',
-					array()
+					array(),
+					$post_type
 				);
 				
 				/* check we have settings to output */

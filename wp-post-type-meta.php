@@ -2,7 +2,7 @@
 /*
 Plugin Name: WP Post Type Meta
 Description: Adds an admin sub menu to allows for a post type description to be added, and extensibility allows other post type meta information.
-Version:     0.1
+Version:     0.3
 Author:      Mark Wilkinson
 Author URI:  http://markwilkinson.me
 Text Domain: wpptm
