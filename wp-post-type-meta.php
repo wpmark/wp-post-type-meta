@@ -2,7 +2,7 @@
 /*
 Plugin Name: WP Post Type Meta
 Description: Adds an admin sub menu to allows for a post type description to be added, and extensibility allows other post type meta information.
-Version:     0.3
+Version:     0.6
 Author:      Mark Wilkinson
 Author URI:  http://markwilkinson.me
 Text Domain: wpptm
@@ -21,14 +21,13 @@ require_once dirname( __FILE__ ) . '/functions/meta-update.php';
 * Function wpptm_description()
 * helper function to get all the post types (filterable)
 ***************************************************************/
-function wpptm_get_post_types() {
+function wpptm_get_post_types( $output = 'objects' ) {
 
 	$post_types = get_post_types(
 		array(
-			'public' => true,
 			'show_ui' => true,
 		),
-		'objects'
+		$output
 	);
 
 	/* allow post types to be filterable */

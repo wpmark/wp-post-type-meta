@@ -51,6 +51,13 @@ function wpptm_metainfo_content() {
 						/* loop through each setting */
 						foreach( $wpptm_settings as $setting ) {
 							
+							/* get the setting post type */
+							$setting_post_type = $setting[ 'post_types' ];
+							
+							/* check this setting should be shown on this post type */
+							if( ! in_array( $post_type->name, $setting_post_type ) )
+								continue;
+							
 							?>
 					    	<tr class="wpptm-setting wpptm-setting-<?php echo esc_attr( $post_type->name . '_' . $setting[ 'id' ] ); ?>">
 					    		<th>
@@ -152,7 +159,7 @@ function wpptm_metainfo_content() {
 										default:
 										
 											?>
-											<input type="text" name="<?php echo $post_type->name . '_' . $setting[ 'id' ]; ?>" id="<?php echo esc_attr( $setting[ 'id' ] ); ?>" class="regular-text" value="<?php echo get_option( $current_setting ) ?>" />
+											<input type="text" name="<?php echo $post_type->name . '_' . $setting[ 'id' ]; ?>" id="<?php echo esc_attr( $setting[ 'id' ] ); ?>" class="regular-text" value="<?php echo $current_setting ?>" />
 											<?php
 										
 									} // end switch statement

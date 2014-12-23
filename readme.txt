@@ -4,7 +4,7 @@ Donate link: http://markwilkinson.me/saythanks
 Tags: custom post type, meta, options
 Requires at least: 4.0
 Tested up to: 4.0.1
-Stable tag: 0.3
+Stable tag: 0.6
 License: GPLv2 or later
 License URI: http://www.gnu.org/licenses/gpl-2.0.html
 
@@ -47,6 +47,7 @@ function wpptm_add_select_input( $settings ) {
 	
 	/* add our setting to the settings array */
 	$settings[] = array(
+		'post_types' => array( 'my_custom_cpt' ),
 		'type'=> 'select',
 		'label'=> 'A Select Box',
 		'id'=> ‘selectbox’,
@@ -87,6 +88,15 @@ In the above example if the custom post type was called `cpt_content` you would 
 None yet!
 
 == Changelog ==
+
+= 0.6 =
+* Allow settings to be added to specified post types
+
+= 0.5 =
+* Corrected an issue where a saved value for a text input was not displayed in the text input on the meta screen, although it was saved to the database.
+
+= 0.4 =
+* Add post type meta menu item to all post types not just public ones.
 
 = 0.3 =
 * Changed the way in which meta values are saved. Less complex now!

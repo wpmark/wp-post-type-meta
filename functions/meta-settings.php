@@ -9,6 +9,7 @@ function wpptm_add_description_setting( $settings ) {
 	
 	/* add our description setting to the setting array */
 	$settings[] = array(
+		'post_types' => wpptm_get_post_types( 'names' ),
 		'type'=> 'wysiwyg',
 		'label'=> 'Description',
 		'id'=> 'description', // this is the option name where the setting is stored
