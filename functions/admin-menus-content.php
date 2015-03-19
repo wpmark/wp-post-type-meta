@@ -15,7 +15,7 @@ function wpptm_metainfo_content() {
 	?>
 	<div class="wrap">
 		
-		<h2><?php echo esc_html( $post_type->labels->name ); ?> Meta Information</h2>
+		<h2><?php echo apply_filters( 'wpptm_post_type_meta_title', esc_html( $post_type->labels->name ) . 'Meta Information', $post_type ); ?></h2>
 	
 		<?php if ( isset( $_GET[ 'updated' ] ) && $_GET[ 'updated' ] ) { ?>
 	
@@ -24,6 +24,17 @@ function wpptm_metainfo_content() {
 			</div>
 	
 		<?php } ?>
+		
+		<?php
+			
+			/**
+			 * @hook wpptm_before_form
+			 * fires before the meta settings form is outputted
+			 * @param $post_type passed the post types object for the current post type
+			 */
+			do_action( 'wpptm_before_form', $post_type );	
+			
+		?>
 	
 		<form class="wpptm_form" method="POST" style="width: 95%; margin-top: 30px;">
 			
@@ -193,6 +204,17 @@ function wpptm_metainfo_content() {
 			</p>
 	
 		</form>
+		
+		<?php
+			
+			/**
+			 * @hook wpptm_after_form
+			 * fires after the meta settings form is outputted
+			 * @param $post_type passed the post types object for the current post type
+			 */
+			do_action( 'wpptm_after_form', $post_type );	
+			
+		?>
 	
 	</div><!-- // wrap -->
 
