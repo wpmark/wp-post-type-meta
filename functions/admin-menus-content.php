@@ -185,6 +185,8 @@ function wpptm_metainfo_content() {
 					
 			<input type="hidden" name="wpptm_post_type" value="<?php echo esc_attr( $post_type->name ); ?>" />
 			
+			<?php wp_nonce_field( 'wpptm_nonce_action', 'wpptm_nonce_field' ); ?>
+			
 			<p class="submit">
 				<input class="button-primary" type="submit" name="wpptm_update_metainfo" value="Save"/>
 			</p>

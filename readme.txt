@@ -4,7 +4,7 @@ Donate link: http://markwilkinson.me/saythanks
 Tags: custom post type, meta, options
 Requires at least: 4.0
 Tested up to: 4.0.1
-Stable tag: 0.6
+Stable tag: 0.7
 License: GPLv2 or later
 License URI: http://www.gnu.org/licenses/gpl-2.0.html
 
@@ -85,7 +85,7 @@ In the above example if the custom post type was called `cpt_content` you would 
 
 == Screenshots ==
 
-None yet!
+1. The post type meta screen shows all the fields added to this post type.
 
 == Changelog ==
 
