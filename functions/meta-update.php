@@ -6,29 +6,29 @@
 function wpptm_update_post_type_meta() {
 		
 	/* check we have some posted meta information */
-	if( isset( $_POST[ 'wpptm_update_metainfo' ] ) ) {
+	if( isset( $_POST[ 'wpptm_settings' ][ 'wpptm_update_metainfo' ] ) ) {
 		
 		/* check the nonce */
 		if( check_admin_referer( 'wpptm_nonce_action', 'wpptm_nonce_field' ) ) {
 			
 			/* get the current post type */
 			$post_type = $_GET[ 'post_type' ];
-				
+			
+			/* get the current saved values from options */
+			$wpptm_options = get_option( 'wpptm_' . $post_type );
+			
 			/* loop through each setting added */
-			foreach( $_POST as $key => $value ) {
+			foreach( $_POST[ 'wpptm_settings' ] as $key => $value ) {
 				
 				/* if the key is either the post type or the save button */
 				if( $key == 'wpptm_post_type' || $key == 'wpptm_update_metainfo' )
 					continue;
-				
-				/* get the current saved values from options */
-				$wpptm_options = get_option( 'wpptm_meta' );
-								
+						
 				/* add our posted setting to the options array */
 				$wpptm_options[ $key ] = $value;
 	
 				/* update this setting */
-				update_option( 'wpptm_meta', $wpptm_options );
+				update_option( 'wpptm_' . $post_type, $wpptm_options );
 				
 			} // end loop through each setting
 	
