@@ -31,9 +31,8 @@ All post type meta fields are stored in the WordPress options table in the optio
 
 `
 <?php
-	$description = get_option( ‘wpptm_meta’ );
-	$description = $description[ ‘post_type_name_description’ ];
-	echo wpautop( $description );
+	$description = get_option( ‘wpptm_{post_type}’ );
+	echo wpautop( $description[ 'description' ] );
 ?>
 `
 
@@ -47,7 +46,7 @@ function wpptm_add_select_input( $settings ) {
 	
 	/* add our setting to the settings array */
 	$settings[] = array(
-		'post_types' => array( 'my_custom_cpt' ),
+		'post_types' => array( 'my_cpt' ),
 		'type'=> 'select',
 		'label'=> 'A Select Box',
 		'id'=> ‘selectbox’,
@@ -73,13 +72,12 @@ add_filter( 'wpptm_settings', 'wpptm_add_select_input', 20 );
 ?>
 `
 
-In the above example if the custom post type was called `cpt_content` you would access this in template files like so:
+In the above example the custom post type was called `my_cpt` so you would access this in template files like so:
 
 `
 <?php
-	$option = get_option( ‘wpptm_meta’ );
-	$option = $option[ ‘cpt_content_selectbox’ ];
-	echo $option;
+	$option = get_option( ‘wpptm_my_cpt’ );
+	echo $option[ 'selectbox' ];
 ?>
 `
 
@@ -88,6 +86,11 @@ In the above example if the custom post type was called `cpt_content` you would 
 1. The post type meta screen shows all the fields added to this post type.
 
 == Changelog ==
+
+= 0.7 =
+* Altered the way in which meta is saved. Instead of saving everything in one option, they are now split per post type. All are prefixed with `wpptm_` followed by the post type name
+* Added a before and after post type meta form hooks to allow developers to add content before and after the form output for post type meta.
+* Filtered to the post type meta title to allow developers to change the title output
 
 = 0.6 =
 * Allow settings to be added to specified post types
