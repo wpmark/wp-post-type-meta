@@ -15,7 +15,7 @@ function wpptm_metainfo_content() {
 	?>
 	<div class="wrap">
 		
-		<h2><?php echo apply_filters( 'wpptm_post_type_meta_title', esc_html( $post_type->labels->name ) . 'Meta Information', $post_type ); ?></h2>
+		<h2><?php echo apply_filters( 'wpptm_post_type_meta_title', esc_html( $post_type->labels->name ) . ' Meta Information', $post_type ); ?></h2>
 	
 		<?php if ( isset( $_GET[ 'updated' ] ) && $_GET[ 'updated' ] ) { ?>
 	
@@ -161,6 +161,7 @@ function wpptm_metainfo_content() {
 									    case 'checkbox':
 									    
 									    	?>
+									    	<input type="hidden" name="wpptm_settings[<?php echo $setting[ 'id' ]; ?>]" value="0" />
 											<input type="checkbox" name="wpptm_settings[<?php echo $setting[ 'id' ]; ?>]" id="<?php echo esc_attr( $setting[ 'id' ] ); ?>" value="1" <?php checked( $current_setting, '1' ); ?> />
 											<?php
 									    	

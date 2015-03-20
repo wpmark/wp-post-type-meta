@@ -16,7 +16,7 @@ function wpptm_update_post_type_meta() {
 			
 			/* get the current saved values from options */
 			$wpptm_options = get_option( 'wpptm_' . $post_type );
-			
+			wpbasis_var_dump( $_POST[ 'wpptm_settings' ] );
 			/* loop through each setting added */
 			foreach( $_POST[ 'wpptm_settings' ] as $key => $value ) {
 				
