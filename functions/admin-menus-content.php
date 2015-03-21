@@ -15,7 +15,7 @@ function wpptm_metainfo_content() {
 	?>
 	<div class="wrap">
 		
-		<h2><?php echo esc_html( $post_type->labels->name ); ?> Meta Information</h2>
+		<h2><?php echo apply_filters( 'wpptm_post_type_meta_title', esc_html( $post_type->labels->name ) . ' Meta Information', $post_type ); ?></h2>
 	
 		<?php if ( isset( $_GET[ 'updated' ] ) && $_GET[ 'updated' ] ) { ?>
 	
@@ -24,6 +24,17 @@ function wpptm_metainfo_content() {
 			</div>
 	
 		<?php } ?>
+		
+		<?php
+			
+			/**
+			 * @hook wpptm_before_form
+			 * fires before the meta settings form is outputted
+			 * @param $post_type passed the post types object for the current post type
+			 */
+			do_action( 'wpptm_before_form', $post_type );	
+			
+		?>
 	
 		<form class="wpptm_form" method="POST" style="width: 95%; margin-top: 30px;">
 			
@@ -59,9 +70,9 @@ function wpptm_metainfo_content() {
 								continue;
 							
 							?>
-					    	<tr class="wpptm-setting wpptm-setting-<?php echo esc_attr( $post_type->name . '_' . $setting[ 'id' ] ); ?>">
+					    	<tr class="wpptm-setting wpptm-setting-<?php echo esc_attr( $setting[ 'id' ] ); ?>">
 					    		<th>
-						    		<label for="<?php echo esc_attr( $post_type->name . '_' . $setting[ 'id' ] ); ?>" style="font-weight: bold;"><?php echo esc_html( $setting[ 'label' ] ); ?></label>
+						    		<label for="wpptm_settings[<?php echo esc_attr( $setting[ 'id' ] ); ?>]" style="font-weight: bold;"><?php echo esc_html( $setting[ 'label' ] ); ?></label>
 						    	</th>
 						    	
 						    	<td>
@@ -73,8 +84,8 @@ function wpptm_metainfo_content() {
 									 * setting name is stored as an array element in the option named wpptm_meta
 									 * the array element is prefixed with the post type name e.g. wpptm_meta[ 'page_description' ]
 									*/
-									$current_setting = get_option( 'wpptm_meta' );
-									$current_setting = $current_setting[ $post_type->name . '_' . $setting[ 'id' ] ];
+									$current_setting = get_option( 'wpptm_' . $post_type->name );
+									$current_setting = $current_setting[ $setting[ 'id' ] ];
 									
 									/* setup a swith statement to output based on setting type */
 									switch( $setting[ 'type' ] ) {
@@ -100,12 +111,13 @@ function wpptm_metainfo_content() {
 									    	$editor_settings = array(
 									    		'textarea_rows' => $textarea_rows,
 									    		'media_buttons' => $media_buttons,
+									    		'textarea_name'	=> 'wpptm_settings[' . $setting[ 'id' ] . ']'
 									    	);
 									    						    	
 									    	/* display the wysiwyg editor */
 									    	wp_editor(
 									    		$current_setting, // default content
-									    		$post_type->name . '_' . $setting[ 'id' ], // id to give the editor element
+									    		$setting[ 'id' ], // id to give the editor element
 									    		$editor_settings // edit settings from above
 									    	);
 										
@@ -115,7 +127,7 @@ function wpptm_metainfo_content() {
 										case 'select':
 																	
 											?>
-									    	<select name="<?php echo $post_type->name . '_' . $setting[ 'id' ]; ?>" id="<?php echo $setting[ 'id' ]; ?>">
+									    	<select name="wpptm_settings[<?php echo $setting[ 'id' ]; ?>]" id="<?php echo $setting[ 'id' ]; ?>">
 									    	
 									    	<?php
 									    	/* get the setting options */
@@ -138,7 +150,7 @@ function wpptm_metainfo_content() {
 									    	
 									    	?>
 									    	
-									        <textarea name="<?php echo $post_type->name . '_' . $setting[ 'id' ]; ?>" rows="<?php echo esc_attr( $setting[ 'textarea_rows' ] ); ?>" cols="50" id="<?php echo esc_attr( $setting[ 'id' ] ); ?>" class="regular-text"><?php echo $current_setting; ?></textarea>
+									        <textarea name="wpptm_settings[<?php echo $setting[ 'id' ]; ?>]" rows="<?php echo esc_attr( $setting[ 'textarea_rows' ] ); ?>" cols="50" id="<?php echo esc_attr( $setting[ 'id' ] ); ?>" class="regular-text"><?php echo $current_setting; ?></textarea>
 									        
 									        <?php
 										        
@@ -149,7 +161,8 @@ function wpptm_metainfo_content() {
 									    case 'checkbox':
 									    
 									    	?>
-											<input type="checkbox" name="<?php echo $post_type->name . '_' . $setting[ 'id' ]; ?>" id="<?php echo esc_attr( $setting[ 'id' ] ); ?>" value="1" <?php checked( $current_setting, '1' ); ?> />
+									    	<input type="hidden" name="wpptm_settings[<?php echo $setting[ 'id' ]; ?>]" value="0" />
+											<input type="checkbox" name="wpptm_settings[<?php echo $setting[ 'id' ]; ?>]" id="<?php echo esc_attr( $setting[ 'id' ] ); ?>" value="1" <?php checked( $current_setting, '1' ); ?> />
 											<?php
 									    	
 									    	/* break out of the switch statement */
@@ -159,7 +172,7 @@ function wpptm_metainfo_content() {
 										default:
 										
 											?>
-											<input type="text" name="<?php echo $post_type->name . '_' . $setting[ 'id' ]; ?>" id="<?php echo esc_attr( $setting[ 'id' ] ); ?>" class="regular-text" value="<?php echo $current_setting ?>" />
+											<input type="text" name="wpptm_settings[<?php echo $setting[ 'id' ]; ?>]" id="<?php echo esc_attr( $setting[ 'id' ] ); ?>" class="regular-text" value="<?php echo $current_setting ?>" />
 											<?php
 										
 									} // end switch statement
@@ -183,15 +196,26 @@ function wpptm_metainfo_content() {
 				
 			?>
 					
-			<input type="hidden" name="wpptm_post_type" value="<?php echo esc_attr( $post_type->name ); ?>" />
+			<input type="hidden" name="wpptm_settings[wpptm_post_type]" value="<?php echo esc_attr( $post_type->name ); ?>" />
 			
 			<?php wp_nonce_field( 'wpptm_nonce_action', 'wpptm_nonce_field' ); ?>
 			
 			<p class="submit">
-				<input class="button-primary" type="submit" name="wpptm_update_metainfo" value="Save"/>
+				<input class="button-primary" type="submit" name="wpptm_settings[wpptm_update_metainfo]" value="Save"/>
 			</p>
 	
 		</form>
+		
+		<?php
+			
+			/**
+			 * @hook wpptm_after_form
+			 * fires after the meta settings form is outputted
+			 * @param $post_type passed the post types object for the current post type
+			 */
+			do_action( 'wpptm_after_form', $post_type );	
+			
+		?>
 	
 	</div><!-- // wrap -->
 
