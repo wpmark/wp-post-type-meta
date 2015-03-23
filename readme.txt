@@ -4,7 +4,7 @@ Donate link: http://markwilkinson.me/saythanks
 Tags: custom post type, meta, options
 Requires at least: 4.0
 Tested up to: 4.1
-Stable tag: 0.7
+Stable tag: 0.8
 License: GPLv2 or later
 License URI: http://www.gnu.org/licenses/gpl-2.0.html
 
@@ -86,6 +86,9 @@ In the above example the custom post type was called `my_cpt` so you would acces
 1. The post type meta screen shows all the fields added to this post type.
 
 == Changelog ==
+
+= 0.8 =
+* Sanitize data on save using `sanitize_text_field()`
 
 = 0.7 =
 * Altered the way in which meta is saved. Instead of saving everything in one option, they are now split per post type. All are prefixed with `wpptm_` followed by the post type name
