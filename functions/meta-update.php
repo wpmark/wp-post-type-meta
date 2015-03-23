@@ -25,7 +25,7 @@ function wpptm_update_post_type_meta() {
 					continue;
 						
 				/* add our posted setting to the options array */
-				$wpptm_options[ $key ] = $value;
+				$wpptm_options[ $key ] = sanitize_text_field( $value );
 	
 				/* update this setting */
 				update_option( 'wpptm_' . $post_type, $wpptm_options );
