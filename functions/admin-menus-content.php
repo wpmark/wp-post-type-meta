@@ -177,6 +177,15 @@ function wpptm_metainfo_content() {
 										
 									} // end switch statement
 									
+									/* check if we have a description to add */
+									if( ! empty( $setting[ 'desc' ] ) ) {
+										
+										?>
+										<p class="description"><?php echo esc_html( $setting[ 'desc' ] ); ?></p>
+										<?php
+										
+									}
+									
 									?>
 								
 						    	</td>
