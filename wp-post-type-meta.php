@@ -2,7 +2,7 @@
 /*
 Plugin Name: WP Post Type Meta
 Description: Adds an admin sub menu to allow for a post type description to be added, ideal for showing at the top of the custom post type archive page. Through extensibility features the plugin also allows other post type meta information to be stored on a per post type basis.
-Version:     0.9
+Version:     0.9.1
 Author:      Mark Wilkinson
 Author URI:  http://markwilkinson.me
 Text Domain: wpptm
@@ -43,7 +43,7 @@ function wpptm_get_post_types( $output = 'objects' ) {
  */
 function wpptm_remove_pages_post_type( $post_types ) {
 
-    //unset( $post_types[ 'page' ] );
+    unset( $post_types[ 'page' ] );
     return $post_types;
     
 }
@@ -55,9 +55,10 @@ add_filter( 'wpptm_enabled_post_types', 'wpptm_remove_pages_post_type' );
  * this function gets a given field id for a post type
  * @param (string) $field is the name of the field to return - this is the id when declaring a field with the filter
  * @param (string) $post_type is the post type to return the field for - defaults to current queried post type.
+ * @param (string) $default is the value to return if no saved value is returned - defaults to nothing
  * @return the value stored for that field.
  */
-function wpptm_get_field( $field, $post_type = '' ) {
+function wpptm_get_field( $field, $post_type = '', $default = '' ) {
 	
 	/* check we have a post type */
 	if( empty( $post_type ) ) {
@@ -75,10 +76,24 @@ function wpptm_get_field( $field, $post_type = '' ) {
 	
 	/* check we have a field to return */
 	if( empty( $setting ) ) {
-		return false;
+		
+		/* do we have a default to return */
+		if( $default != '' ) {
+			
+			/* set the default to be returned */
+			$setting = $default;
+		
+		/* no setting or default */
+		} else {
+			
+			/* set to false */
+			$setting = false;
+			
+		}
+
 	}
 	
 	/* return our field */
-	return esc_attr( $setting );
+	return apply_filters( 'wpptm_get_field', esc_attr( $setting ), $field, $post_type );
 	
 }

@@ -4,7 +4,7 @@ Donate link: http://markwilkinson.me/saythanks
 Tags: custom post type, meta, options
 Requires at least: 4.0
 Tested up to: 4.1
-Stable tag: 0.9
+Stable tag: 0.9.1
 License: GPLv2 or later
 License URI: http://www.gnu.org/licenses/gpl-2.0.html
 
@@ -87,7 +87,10 @@ In the above example the custom post type was called `my_cpt` so you would acces
 
 == Changelog ==
 
-= 0.9 +
+= 0.9.1 =
+* When using `wpptm_get_field` allow a default string to be returned if the field value does not exist.
+
+= 0.9 =
 * Add a name for each settings array index. This makes it easier to remove a setting using the filter
 * Allow each setting to have a description
 * Minor function doc updates
