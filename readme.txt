@@ -4,7 +4,7 @@ Donate link: http://markwilkinson.me/saythanks
 Tags: custom post type, meta, options
 Requires at least: 4.0
 Tested up to: 4.1
-Stable tag: 0.8
+Stable tag: 0.9
 License: GPLv2 or later
 License URI: http://www.gnu.org/licenses/gpl-2.0.html
 
@@ -86,6 +86,11 @@ In the above example the custom post type was called `my_cpt` so you would acces
 1. The post type meta screen shows all the fields added to this post type.
 
 == Changelog ==
+
+= 0.9 +
+* Add a name for each settings array index. This makes it easier to remove a setting using the filter
+* Allow each setting to have a description
+* Minor function doc updates
 
 = 0.8 =
 * Sanitize data on save using `sanitize_text_field()`
