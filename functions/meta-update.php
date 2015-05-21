@@ -23,8 +23,10 @@ function wpptm_update_post_type_meta() {
 				/* if this type is a wysiwyg */
 				if( $value[ 'type' ] == 'wysiwyg' ) {
 					
+					$output = stripslashes( wp_filter_post_kses( $value[ 'value' ] ) );
+					
 					/* add our posted setting to the options array - sanitizing with wp_kses_post */
-					$wpptm_options[ $key ] = wp_kses_post( $value[ 'value' ] );
+					$wpptm_options[ $key ] = $output;
 			
 				/* any other type of field */
 				} else {
