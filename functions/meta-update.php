@@ -4,7 +4,7 @@
  * Updates/saves the added description
  */
 function wpptm_update_post_type_meta() {
-		
+
 	/* check we have some posted meta information */
 	if( isset( $_POST[ 'wpptm_settings' ][ 'wpptm_update_metainfo' ] ) ) {
 		
@@ -18,14 +18,21 @@ function wpptm_update_post_type_meta() {
 			$wpptm_options = get_option( 'wpptm_' . $post_type );
 
 			/* loop through each setting added */
-			foreach( $_POST[ 'wpptm_settings' ] as $key => $value ) {
+			foreach( $_POST[ 'wpptm_settings' ][ 'fields' ] as $key => $value ) {
 				
-				/* if the key is either the post type or the save button */
-				if( $key == 'wpptm_post_type' || $key == 'wpptm_update_metainfo' )
-					continue;
-						
-				/* add our posted setting to the options array */
-				$wpptm_options[ $key ] = sanitize_text_field( $value );
+				/* if this type is a wysiwyg */
+				if( $value[ 'type' ] == 'wysiwyg' ) {
+					
+					/* add our posted setting to the options array - sanitizing with wp_kses_post */
+					$wpptm_options[ $key ] = wp_kses_post( $value[ 'value' ] );
+			
+				/* any other type of field */
+				} else {
+					
+					/* add our posted setting to the options array */
+					$wpptm_options[ $key ] = sanitize_text_field( $value[ 'value' ] );
+					
+				}
 	
 				/* update this setting */
 				update_option( 'wpptm_' . $post_type, $wpptm_options );

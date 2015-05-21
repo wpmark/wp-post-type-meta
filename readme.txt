@@ -4,7 +4,7 @@ Donate link: http://markwilkinson.me/saythanks
 Tags: custom post type, meta, options
 Requires at least: 4.0
 Tested up to: 4.1
-Stable tag: 0.9.1
+Stable tag: 0.9.2
 License: GPLv2 or later
 License URI: http://www.gnu.org/licenses/gpl-2.0.html
 
@@ -86,6 +86,9 @@ In the above example the custom post type was called `my_cpt` so you would acces
 1. The post type meta screen shows all the fields added to this post type.
 
 == Changelog ==
+
+= 0.9.2 =
+* Amend the way fields are saved. Previously all fields were sanitised with `sanitize_text_field` however this breaks the content in a wysiwyg so these are now sanitised with `wp_kses_post`.
 
 = 0.9.1 =
 * When using `wpptm_get_field` allow a default string to be returned if the field value does not exist.

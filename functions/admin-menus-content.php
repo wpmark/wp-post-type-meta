@@ -111,7 +111,7 @@ function wpptm_metainfo_content() {
 									    	$editor_settings = array(
 									    		'textarea_rows' => $textarea_rows,
 									    		'media_buttons' => $media_buttons,
-									    		'textarea_name'	=> 'wpptm_settings[' . $setting[ 'id' ] . ']'
+									    		'textarea_name'	=> 'wpptm_settings[fields][' . $setting[ 'id' ] . '][value]'
 									    	);
 									    						    	
 									    	/* display the wysiwyg editor */
@@ -127,7 +127,7 @@ function wpptm_metainfo_content() {
 										case 'select':
 																	
 											?>
-									    	<select name="wpptm_settings[<?php echo $setting[ 'id' ]; ?>]" id="<?php echo $setting[ 'id' ]; ?>">
+									    	<select name="wpptm_settings[fields][<?php echo $setting[ 'id' ]; ?>][value]" id="<?php echo $setting[ 'id' ]; ?>">
 									    	
 									    	<?php
 									    	/* get the setting options */
@@ -150,7 +150,7 @@ function wpptm_metainfo_content() {
 									    	
 									    	?>
 									    	
-									        <textarea name="wpptm_settings[<?php echo $setting[ 'id' ]; ?>]" rows="<?php echo esc_attr( $setting[ 'textarea_rows' ] ); ?>" cols="50" id="<?php echo esc_attr( $setting[ 'id' ] ); ?>" class="regular-text"><?php echo $current_setting; ?></textarea>
+									        <textarea name="wpptm_settings[fields][<?php echo $setting[ 'id' ]; ?>][value]" rows="<?php echo esc_attr( $setting[ 'textarea_rows' ] ); ?>" cols="50" id="<?php echo esc_attr( $setting[ 'id' ] ); ?>" class="regular-text"><?php echo $current_setting; ?></textarea>
 									        
 									        <?php
 										        
@@ -161,8 +161,8 @@ function wpptm_metainfo_content() {
 									    case 'checkbox':
 									    
 									    	?>
-									    	<input type="hidden" name="wpptm_settings[<?php echo $setting[ 'id' ]; ?>]" value="0" />
-											<input type="checkbox" name="wpptm_settings[<?php echo $setting[ 'id' ]; ?>]" id="<?php echo esc_attr( $setting[ 'id' ] ); ?>" value="1" <?php checked( $current_setting, '1' ); ?> />
+									    	<input type="hidden" name="wpptm_settings[fields][<?php echo $setting[ 'id' ]; ?>][value]" value="0" />
+											<input type="checkbox" name="wpptm_settings[fields][<?php echo $setting[ 'id' ]; ?>][value]" id="<?php echo esc_attr( $setting[ 'id' ] ); ?>" value="1" <?php checked( $current_setting, '1' ); ?> />
 											<?php
 									    	
 									    	/* break out of the switch statement */
@@ -172,10 +172,12 @@ function wpptm_metainfo_content() {
 										default:
 										
 											?>
-											<input type="text" name="wpptm_settings[<?php echo $setting[ 'id' ]; ?>]" id="<?php echo esc_attr( $setting[ 'id' ] ); ?>" class="regular-text" value="<?php echo $current_setting ?>" />
+											<input type="text" name="wpptm_settings[fields][<?php echo $setting[ 'id' ]; ?>][value]" id="<?php echo esc_attr( $setting[ 'id' ] ); ?>" class="regular-text" value="<?php echo $current_setting ?>" />
 											<?php
 										
 									} // end switch statement
+									
+									echo '<input type="hidden" name="wpptm_settings[fields][' . esc_attr( $setting[ 'id' ] ) . '][type]" value="' . esc_attr( $setting[ 'type' ] ) . '" />';
 									
 									/* check if we have a description to add */
 									if( ! empty( $setting[ 'desc' ] ) ) {
