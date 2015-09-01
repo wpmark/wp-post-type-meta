@@ -4,7 +4,7 @@ Donate link: http://markwilkinson.me/saythanks
 Tags: custom post type, meta, options
 Requires at least: 4.0
 Tested up to: 4.1
-Stable tag: 0.9.5
+Stable tag: 0.9.6
 License: GPLv2 or later
 License URI: http://www.gnu.org/licenses/gpl-2.0.html
 
@@ -86,6 +86,9 @@ In the above example the custom post type was called `my_cpt` so you would acces
 1. The post type meta screen shows all the fields added to this post type.
 
 == Changelog ==
+
+= 0.9.6 =
+* Fixes an error when html was outputted escaped all the time when saving data with the WYSIWYG field.
 
 = 0.9.5 =
 * Prevents an error when returning a field which is empty and not been set before.
