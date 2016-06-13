@@ -21,18 +21,16 @@ function wpptm_update_post_type_meta() {
 			foreach( $_POST[ 'wpptm_settings' ][ 'fields' ] as $key => $value ) {
 				
 				/* if this type is a wysiwyg */
-				if( $value[ 'type' ] == 'wysiwyg' ) {
-					
-					$output = stripslashes( wp_filter_post_kses( $value[ 'value' ] ) );
+				if( $value[ 'type' ] == 'wysiwyg' ) { 
 					
 					/* add our posted setting to the options array - sanitizing with wp_kses_post */
-					$wpptm_options[ $key ] = $output;
+					$wpptm_options[ $key ] = stripslashes( wp_filter_post_kses( $value[ 'value' ] ) );
 			
 				/* any other type of field */
 				} else {
 					
 					/* add our posted setting to the options array */
-					$wpptm_options[ $key ] = sanitize_text_field( $value[ 'value' ] );
+					$wpptm_options[ $key ] = stripslashes( sanitize_text_field( $value[ 'value' ] ) );
 					
 				}
 	
