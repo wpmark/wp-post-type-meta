@@ -2,7 +2,7 @@
 /*
 Plugin Name: WP Post Type Meta
 Description: Adds an admin sub menu to allow for a post type description to be added, ideal for showing at the top of the custom post type archive page. Through extensibility features the plugin also allows other post type meta information to be stored on a per post type basis.
-Version:     0.9.6
+Version:     1.0
 Author:      Mark Wilkinson
 Author URI:  http://markwilkinson.me
 Text Domain: wpptm
